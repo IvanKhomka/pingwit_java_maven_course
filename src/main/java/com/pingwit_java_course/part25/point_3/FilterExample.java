@@ -1,8 +1,8 @@
 package com.pingwit_java_course.part25.point_3;
 
 import com.pingwit_java_course.part25.point_3.entity.Phone;
+
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class FilterExample {
     public static void main(String[] args) {

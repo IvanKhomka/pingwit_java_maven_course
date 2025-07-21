@@ -1,10 +1,10 @@
 package com.pingwit_java_course.part25.point_3;
 
 import com.pingwit_java_course.part25.point_3.entity.PhoneProducer;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class FlatMapExample {
     public static void main(String[] args) {

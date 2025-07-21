@@ -2,7 +2,6 @@ package com.pingwit_java_course.part26.homework.task2;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 public class HotelCatalog {
     public static void main(String[] args) {
@@ -13,8 +12,8 @@ public class HotelCatalog {
                 new Hotel("Radisson Red", 8.8)
         );
 
-        Optional<Hotel> bestHotel = hotels.stream()
-                .max(Comparator.comparing(Hotel::rating));
-        bestHotel.ifPresent(System.out::println);
+        hotels.stream()
+                .max(Comparator.comparing(Hotel::rating))
+                .ifPresent(System.out::println);
     }
 }

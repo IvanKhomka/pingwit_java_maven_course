@@ -4,16 +4,16 @@ import java.util.List;
 
 public class PhoneCatalog {
     public static void main(String[] args) {
-        List<String> phones = List.of(
-                "iPhone 16",
-                "Samsung Galaxy S25 Ultra",
-                "iPhone 15",
-                "Realme GT 7 Pro",
-                "Samsung Galaxy S25 Ultra",
-                "iPhone 16"
+        List<Phone> phones = List.of(
+                new Phone("iPhone 16"),
+                new Phone("Samsung Galaxy S25 Ultra"),
+                new Phone("iPhone 15"),
+                new Phone("Realme GT 7 Pro"),
+                new Phone("Samsung Galaxy S25 Ultra"),
+                new Phone("iPhone 16")
         );
 
-        List<String> uniquePhones = phones.stream()
+        List<Phone> uniquePhones = phones.stream()
                 .distinct()
                 .toList();
 
