@@ -15,7 +15,6 @@ public class MicrosoftWordFileCreationExample {
         createImage(document, Path.of("src/main/java/com/pingwit_java_course/part28/word/1200x1200bf-60.png"));
         createTitle(document, font, "Chuxx Morris");
         createSubTitle(document, font, "Solomon Grundy");
-        createRegularText(document, font, Files.readString(Path.of("src/main/java/com/pingwit_java_course/part28/word/salomon_grundy.txt")));
 
         Files.readAllLines(Path.of("src/main/java/com/pingwit_java_course/part28/word/salomon_grundy.txt"))
                 .forEach(line -> createRegularText(document, font, line));

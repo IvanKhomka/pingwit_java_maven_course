@@ -1,7 +1,11 @@
 package com.pingwit_java_course.part28.homework.task1;
 
 import org.apache.poi.util.Units;
-import org.apache.poi.xwpf.usermodel.*;
+import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
+import org.apache.poi.xwpf.usermodel.UnderlinePatterns;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 import java.io.FileOutputStream;
 import java.nio.file.Files;
