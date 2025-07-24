@@ -17,6 +17,7 @@ public class EminemSingForTheMomentToMicrosoftWord {
         createSubTitle(document, font, "Sing For The Moment");
         createRegularText(document, font, Files.readString(Path.of("src/main/java/com/pingwit_java_course/part28/homework/task1/Sing_For_The_Moment.txt")));
 
+        //Ты случайно или осознанно дважды записываешь один и тот же текст в файл? (строка 18 фактически дублирует код ниже)
         Files.readAllLines(Path.of("src/main/java/com/pingwit_java_course/part28/homework/task1/Sing_For_The_Moment.txt"))
                 .forEach(line -> createRegularText(document, font, line));
 
