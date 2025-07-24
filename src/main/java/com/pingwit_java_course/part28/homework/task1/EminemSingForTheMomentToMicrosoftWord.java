@@ -19,7 +19,6 @@ public class EminemSingForTheMomentToMicrosoftWord {
         createImage(document, Path.of("src/main/java/com/pingwit_java_course/part28/homework/task1/sing_for_the_moment.png"));
         createTitle(document, font, "Eminem");
         createSubTitle(document, font, "Sing For The Moment");
-        createRegularText(document, font, Files.readString(Path.of("src/main/java/com/pingwit_java_course/part28/homework/task1/Sing_For_The_Moment.txt")));
 
         Files.readAllLines(Path.of("src/main/java/com/pingwit_java_course/part28/homework/task1/Sing_For_The_Moment.txt"))
                 .forEach(line -> createRegularText(document, font, line));
