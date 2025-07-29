@@ -1,1 +1,8 @@
-[{"name":"John","age":30,"city":"New York"},{"name":"Alice","age":25,"city":"Los Angeles"},{"name":"Bob","age":35,"city":"Chicago"}]
+package com.pingwit_java_course.part29.read;
+
+record TaxiDriver(
+        String name,
+        Integer age,
+        String city
+) {
+}
