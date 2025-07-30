@@ -17,6 +17,7 @@ public class PasswordGeneratorApp {
         System.out.println("Enter how many password to generate: ");
         int count = scanner.nextInt();
 
+        //Интересная библиотека, сам нашел или кто-то подсказал?
         CharacterData allowedSpecialChars = new CharacterData() {
             @Override
             public String getErrorCode() {

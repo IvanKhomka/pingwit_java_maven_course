@@ -12,6 +12,7 @@ public class AtmObjectsDeserialization {
     public static void main(String[] args) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        // а давай код со строки 16 и до конца перепишем используя Optional
         InputStream inputStream = ClassLoader.getSystemResourceAsStream("part29/homework/task_1/atms.json");
         if (inputStream == null) {
             System.err.println("File atms.json not found.");
