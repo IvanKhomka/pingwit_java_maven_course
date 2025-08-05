@@ -5,13 +5,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 record Atm(
         Integer id,
         String area,
-        @JsonProperty("city_type") String cityType, // String cityType с новой строки обычно делают, тоже самое для всех других полей
+        @JsonProperty("city_type")
+        String cityType,
         String city,
-        @JsonProperty("address_type") String addressType,
+        @JsonProperty("address_type")
+        String addressType,
         String address,
         String house,
-        @JsonProperty("work_time") String workTime,
-        @JsonProperty("ATM_type") String atmType,
-        @JsonProperty("cash_in") String cashIn
+        @JsonProperty("work_time")
+        String workTime,
+        @JsonProperty("ATM_type")
+        String atmType,
+        @JsonProperty("cash_in")
+        String cashIn
 ) {
 }
