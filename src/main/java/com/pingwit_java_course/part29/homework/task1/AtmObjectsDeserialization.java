@@ -17,7 +17,7 @@ public class AtmObjectsDeserialization {
         Optional<InputStream> inputStreamOptional = Optional.ofNullable(ClassLoader.getSystemResourceAsStream("part29/homework/task_1/atms.json"));
 
         List<Atm> atms = inputStreamOptional
-                .map(is -> {
+                .map(is -> { // из минусов Optional - это checked исключения, которые вот так приходится обрабатывать. НО обычно такую конструкцию просто выносят в приватный метод и получается красивенько
                     try {
                         return mapper.readValue(is, new TypeReference<List<Atm>>() {
                         });
