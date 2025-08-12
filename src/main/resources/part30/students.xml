@@ -1,0 +1,21 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<students>
+    <student>
+        <groupNumber>101</groupNumber>
+        <firstName>Ivan</firstName>
+        <lastName>Khomich</lastName>
+        <faculty>Engineering</faculty>
+    </student>
+    <student>
+        <groupNumber>102</groupNumber>
+        <firstName>Egorka</firstName>
+        <lastName>Pingwit</lastName>
+        <faculty>Mathematics</faculty>
+    </student>
+    <student>
+        <groupNumber>103</groupNumber>
+        <firstName>Maria</firstName>
+        <lastName>Smirnova</lastName>
+        <faculty>Physics</faculty>
+    </student>
+</students>
