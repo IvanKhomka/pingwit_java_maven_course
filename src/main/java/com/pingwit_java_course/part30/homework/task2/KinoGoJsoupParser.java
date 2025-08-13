@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class KinoGoJsoupParser {
 
@@ -18,37 +19,39 @@ public class KinoGoJsoupParser {
 
         List<Film> films = new ArrayList<>();
 
-        for (Element shortstory : doc.select("div.shortstory")) {
+        for (Element shortStory : doc.select("div.shortstory")) {
             Film film = new Film();
 
-            Element titleEl = shortstory.selectFirst("div.shortstory__title h2");
+            Element titleEl = shortStory.selectFirst("div.shortstory__title h2");
             if (titleEl != null) {
                 film.title = titleEl.text();
             }
 
-            for (Element span : shortstory.select("div.shortstory__info span")) {
-                String label = span.selectFirst("b") != null ? span.selectFirst("b").text() : "";
-
-                if (label.contains("Год выпуска")) {
-                    film.year = span.select("a").text();
-                } else if (label.contains("Страна")) {
-                    film.country = span.select("a").text();
-                } else if (label.contains("Жанр")) {
-                    film.genre = span.select("a").eachText().toString();
-                } else if (label.contains("Продолжительность")) {
-                    film.duration = span.ownText();
-                } else if (label.contains("Премьера")) {
-                    film.premiere = span.ownText();
-                } else if (label.contains("Качество")) {
-                    film.quality = span.ownText();
-                }
+            for (Element span : shortStory.select("div.shortstory__info span")) {
+                Optional.ofNullable(span.selectFirst("b"))
+                        .map(Element::text)
+                        .ifPresent(label -> updateFilm(label, span, film));
             }
 
             films.add(film);
         }
 
-        for (Film f : films) {
-            System.out.println(f);
+        films.forEach(System.out::println);
+    }
+
+    private static void updateFilm(String label, Element span, Film film) {
+        if (label.contains("Год выпуска")) {
+            film.year = span.select("a").text();
+        } else if (label.contains("Страна")) {
+            film.country = span.select("a").text();
+        } else if (label.contains("Жанр")) {
+            film.genre = span.select("a").eachText().toString();
+        } else if (label.contains("Продолжительность")) {
+            film.duration = span.ownText();
+        } else if (label.contains("Премьера")) {
+            film.premiere = span.ownText();
+        } else if (label.contains("Качество")) {
+            film.quality = span.ownText();
         }
     }
 }
