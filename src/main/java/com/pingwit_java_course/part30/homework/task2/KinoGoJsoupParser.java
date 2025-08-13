@@ -24,7 +24,7 @@ public class KinoGoJsoupParser {
 
             Element titleEl = shortStory.selectFirst("div.shortstory__title h2");
             if (titleEl != null) {
-                film.title = titleEl.text();
+                film.setTitle(titleEl.text());
             }
 
             for (Element span : shortStory.select("div.shortstory__info span")) {
@@ -41,17 +41,17 @@ public class KinoGoJsoupParser {
 
     private static void updateFilm(String label, Element span, Film film) {
         if (label.contains("Год выпуска")) {
-            film.year = span.select("a").text();
+            film.setYear(span.select("a").text());
         } else if (label.contains("Страна")) {
-            film.country = span.select("a").text();
+            film.setCountry(span.select("a").text());
         } else if (label.contains("Жанр")) {
-            film.genre = span.select("a").eachText().toString();
+            film.setGenre(span.select("a").eachText().toString());
         } else if (label.contains("Продолжительность")) {
-            film.duration = span.ownText();
+            film.setDuration(span.ownText());
         } else if (label.contains("Премьера")) {
-            film.premiere = span.ownText();
+            film.setPremiere(span.ownText());
         } else if (label.contains("Качество")) {
-            film.quality = span.ownText();
+            film.setQuality(span.ownText());
         }
     }
 }

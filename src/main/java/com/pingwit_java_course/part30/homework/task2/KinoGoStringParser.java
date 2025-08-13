@@ -26,13 +26,13 @@ public class KinoGoStringParser {
             String block = storyMatcher.group(1);
             Film film = new Film();
 
-            film.title = extract(block, "<h2>(.*?)</h2>");
-            film.year = extract(block, "Год выпуска:</b>\\s*<a[^>]*>(.*?)</a>");
-            film.country = extract(block, "Страна:</b>\\s*<a[^>]*>(.*?)</a>");
-            film.genre = extractAll(block, "Жанр:</b>(.*?)</span>");
-            film.duration = extract(block, "Продолжительность:</b>([^<]*)");
-            film.premiere = extract(block, "Премьера.*?</b>([^<]*)");
-            film.quality = extract(block, "Качество:</b>([^<]*)");
+            film.setTitle(extract(block, "<h2>(.*?)</h2>"));
+            film.setYear(extract(block, "Год выпуска:</b>\\s*<a[^>]*>(.*?)</a>"));
+            film.setCountry(extract(block, "Страна:</b>\\s*<a[^>]*>(.*?)</a>"));
+            film.setGenre(extractAll(block, "Жанр:</b>(.*?)</span>"));
+            film.setDuration(extract(block, "Продолжительность:</b>([^<]*)"));
+            film.setPremiere(extract(block, "Премьера.*?</b>([^<]*)"));
+            film.setQuality(extract(block, "Качество:</b>([^<]*)"));
 
             films.add(film);
         }
