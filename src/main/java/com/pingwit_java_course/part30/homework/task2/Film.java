@@ -1,7 +1,7 @@
 package com.pingwit_java_course.part30.homework.task2;
 
 public class Film {
-    public String title;
+    public String title; // public -> private для всех полей
     public String year;
     public String country;
     public String genre;
