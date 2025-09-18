@@ -1,22 +1,19 @@
 package com.pingwit_java_course.part31.homework.task2;
 
 public class ToyStoreMain {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         ToyStore store = new ToyStore();
 
-        Thread supplier1 = new Thread(new Supplier(store, "FirstSupplier", 100));
-        Thread supplier2 = new Thread(new Supplier(store, "SecondSupplier", 50));
+        Thread supplier1 = new Thread(new ToySupplier(store, "FirstSupplier", 1000));
+        Thread supplier2 = new Thread(new ToySupplier(store, "SecondSupplier", 500));
 
         supplier1.start();
         supplier2.start();
 
-        try {
-            supplier1.join();
-            supplier2.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        supplier1.join();
+        supplier2.join();
 
         System.out.println("Toys in a store: " + store.getToys());
+        System.out.println("Total toys in a store: " + store.getToys().size());
     }
 }

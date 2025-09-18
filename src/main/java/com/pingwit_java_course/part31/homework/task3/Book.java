@@ -15,6 +15,8 @@ public class Book {
         return title;
     }
 
+    public int getYear() { return year;}
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

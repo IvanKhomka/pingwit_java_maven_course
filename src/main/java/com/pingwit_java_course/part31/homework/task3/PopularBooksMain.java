@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class PopularBooksMain {
     public static void main(String[] args) {
@@ -26,14 +27,14 @@ public class PopularBooksMain {
 
         Map<Book, Integer> popularity = new HashMap<>();
 
-        for (Student s : students) {
-            for (Book b : s.getBooks()) {
-                popularity.put(b, popularity.getOrDefault(b, 0) + 1);
-            }
-        }
-
-        popularity.entrySet().stream()
-                .sorted((a, b) -> b.getValue() - a.getValue())
+        students.stream()
+                .flatMap(s -> s.getBooks().stream())
+                .collect(Collectors.toMap(
+                        b -> b,
+                        b -> 1,
+                        Integer::sum))
+                .entrySet().stream()
+                .sorted(Map.Entry.<Book, Integer>comparingByValue().reversed())
                 .limit(3)
                 .forEach(entry ->
                         System.out.println(entry.getKey().getTitle() + " — " + entry.getValue() + " students"));

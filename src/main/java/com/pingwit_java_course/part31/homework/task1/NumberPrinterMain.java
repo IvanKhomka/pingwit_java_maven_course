@@ -2,7 +2,7 @@ package com.pingwit_java_course.part31.homework.task1;
 
 public class NumberPrinterMain {
     public static void main(String[] args) {
-        Thread thread = new Thread(new NumberPrinter());
+        Thread thread = new Thread(new NumberPrinter(20));
         thread.start();
 
         try {
