@@ -7,14 +7,15 @@ import java.io.IOException;
 public class WordCount {
     public static void main(String[] args) {
         if (args.length == 0) {
+            //в таких случаях хорошо выбросить исключение, например, IllegalArgumentException
             System.out.println("Specify the paths to the files in the program arguments.");
             return;
         }
 
-        Thread[] threads = new Thread[args.length];
+        Thread[] threads = new Thread[args.length]; // я бы полностью на коллекции переходил
         for (int i = 0; i < args.length; i++) {
             String filePath = args[i];
-            threads[i] = new Thread(() -> {
+            threads[i] = new Thread(() -> { // Я думаю стоит создать отдельный Runnable класс и туда вынести логику подсчета и печати
                 int count = countWords(filePath);
                 System.out.println("File: " + filePath + " — words: " + count);
             });

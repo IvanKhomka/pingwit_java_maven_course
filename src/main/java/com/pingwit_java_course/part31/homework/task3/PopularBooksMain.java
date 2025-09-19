@@ -1,10 +1,6 @@
 package com.pingwit_java_course.part31.homework.task3;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class PopularBooksMain {
@@ -25,8 +21,24 @@ public class PopularBooksMain {
                 new Book("Harry Potter", 1997),
                 new Book("Lord Of The Rings", 1954))));
 
-        Map<Book, Integer> popularity = new HashMap<>();
+        Map<Book, Integer> popularity = new HashMap<>();//остался артефакт от прошлого кода
 
+        students.stream()
+                .flatMap(student -> student.getBooks().stream())  // объединяем все книги студентов
+                .collect(Collectors.groupingBy(
+                        b -> b,
+                        Collectors.summingInt(b -> 1)
+                ));
+        /*
+        Альтернатива до .entrySet().stream
+
+        students.stream()
+                .flatMap(student -> student.getBooks().stream())  // объединяем все книги студентов
+                .collect(Collectors.groupingBy(
+                        b -> b,
+                        Collectors.summingInt(b -> 1)
+                ));
+         */
         students.stream()
                 .flatMap(s -> s.getBooks().stream())
                 .collect(Collectors.toMap(
