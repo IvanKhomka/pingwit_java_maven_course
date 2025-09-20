@@ -2,14 +2,15 @@ package com.pingwit_java_course.part32.homework.task1;
 
 import java.util.*;
 
+//Давай попробуем эту задачу решить через ExecutorService, он должен хорошо подойти
 public class CementUnload {
-    static final int WORKERS = 5;
-    static final int MAX_WORKERS_PER_TRUCK = 3;
+    static final int WORKERS = 5; //private
+    static final int MAX_WORKERS_PER_TRUCK = 3; //private
 
     public static void main(String[] args) throws InterruptedException {
         Truck truck1 = new Truck("Truck 1", 30, MAX_WORKERS_PER_TRUCK);
         Truck truck2 = new Truck("Truck 2", 30, MAX_WORKERS_PER_TRUCK);
-        List<Truck> trucks = Arrays.asList(truck1, truck2);
+        List<Truck> trucks = Arrays.asList(truck1, truck2); // Arrays.asList() -> List.of() чуть более современный подход
 
         List<Integer> tiredWorkers = pickTiredWorkers(WORKERS, 3);
         System.out.println("Tired workers: " + tiredWorkers);
@@ -38,7 +39,7 @@ public class CementUnload {
                 " unloaded " + best.getUnloadedBags() + " bags and receives burger!");
     }
 
-    static List<Integer> pickTiredWorkers(int total, int tiredCount) {
+    static List<Integer> pickTiredWorkers(int total, int tiredCount) { //private
         List<Integer> list = new ArrayList<>();
         for (int i = 1; i <= total; i++) list.add(i);
         Collections.shuffle(list);

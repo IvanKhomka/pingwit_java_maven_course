@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Truck {
     private final String name;
     private final AtomicInteger bags;
-    private final AtomicInteger workers;
+    private final AtomicInteger workers; // поля workers и maxWorkers лучше вынести за пределы Truck. Задача Truck называться и перевозить мешки, контроль за кол-вом работников задача, например, прораба (можно в методе мейн, можно добавить сервис)
     private final int maxWorkers;
 
     public Truck(String name, int bagCount, int maxWorkers) {
