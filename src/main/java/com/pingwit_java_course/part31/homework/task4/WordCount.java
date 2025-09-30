@@ -20,7 +20,7 @@ public class WordCount {
             try {
                 t.join();
             } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
+                Thread.currentThread().interrupt(); // Почему ты здесь захотел добавить .interrupt()?
                 e.printStackTrace();
             }
         }

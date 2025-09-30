@@ -16,7 +16,7 @@ public class Truck {
     }
 
     public boolean tryUnload(int workerId, boolean tired) {
-        if (!hasBags()) return false;
+        if (!hasBags()) return false; //всегда добавляй {}
 
         if (bags.decrementAndGet() >= 0) {
             simulateWork(workerId, tired);
