@@ -4,8 +4,8 @@ public class ToyStoreMain {
     public static void main(String[] args) throws InterruptedException {
         ToyStore store = new ToyStore();
 
-        Thread supplier1 = new Thread(new ToySupplier(store, "FirstSupplier", 1000));//давай посолиднее name придумаем
-        Thread supplier2 = new Thread(new ToySupplier(store, "SecondSupplier", 500));//давай посолиднее name придумаем
+        Thread supplier1 = new Thread(new ToySupplier(store, "Dream Toys LLC", 1000));
+        Thread supplier2 = new Thread(new ToySupplier(store, "Egorka Toys Inc.", 500));
 
         supplier1.start();
         supplier2.start();

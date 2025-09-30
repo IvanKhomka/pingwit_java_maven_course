@@ -1,35 +1,38 @@
 package com.pingwit_java_course.part32.homework.task1;
 
 import java.util.*;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
-//Давай попробуем эту задачу решить через ExecutorService, он должен хорошо подойти
 public class CementUnload {
-    static final int WORKERS = 5; //private
-    static final int MAX_WORKERS_PER_TRUCK = 3; //private
+    private static final int WORKERS = 5;
+    private static final int MAX_WORKERS_PER_TRUCK = 3;
 
     public static void main(String[] args) throws InterruptedException {
-        Truck truck1 = new Truck("Truck 1", 30, MAX_WORKERS_PER_TRUCK);
-        Truck truck2 = new Truck("Truck 2", 30, MAX_WORKERS_PER_TRUCK);
-        List<Truck> trucks = Arrays.asList(truck1, truck2); // Arrays.asList() -> List.of() чуть более современный подход
+        Truck truck1 = new Truck("Truck 1", 30);
+        Truck truck2 = new Truck("Truck 2", 30);
+        List<Truck> trucks = List.of(truck1, truck2);
 
         List<Integer> tiredWorkers = pickTiredWorkers(WORKERS, 3);
         System.out.println("Tired workers: " + tiredWorkers);
 
+        ExecutorService executor = Executors.newFixedThreadPool(WORKERS);
         List<Worker> workers = new ArrayList<>();
-        List<Thread> threads = new ArrayList<>();
+
+        Map<Truck, AtomicInteger> truckAssignments = new HashMap<>();
+        for (Truck t : trucks) {
+            truckAssignments.put(t, new AtomicInteger(0));
+        }
 
         for (int i = 1; i <= WORKERS; i++) {
             boolean tired = tiredWorkers.contains(i);
-            Worker worker = new Worker(i, tired, trucks);
+            Worker worker = new Worker(i, tired);
             workers.add(worker);
-            Thread t = new Thread(worker);
-            threads.add(t);
-            t.start();
+            executor.submit(() -> runWorker(worker, trucks, truckAssignments));
         }
 
-        for (Thread t : threads) {
-            t.join();
-        }
+        executor.shutdown();
+        executor.awaitTermination(1, TimeUnit.HOURS);
 
         Worker best = workers.stream()
                 .max(Comparator.comparingInt(Worker::getUnloadedBags))
@@ -39,7 +42,31 @@ public class CementUnload {
                 " unloaded " + best.getUnloadedBags() + " bags and receives burger!");
     }
 
-    static List<Integer> pickTiredWorkers(int total, int tiredCount) { //private
+    private static void runWorker(Worker worker,
+                                  List<Truck> trucks,
+                                  Map<Truck, AtomicInteger> assignments) {
+        Random random = new Random();
+
+        while (trucks.stream().anyMatch(Truck::hasBags)) {
+            Truck truck = trucks.get(random.nextInt(trucks.size()));
+            AtomicInteger counter = assignments.get(truck);
+
+            if (counter.get() < MAX_WORKERS_PER_TRUCK && truck.hasBags()) {
+                counter.incrementAndGet();
+                try {
+                    if (truck.tryUnload(worker.getId(), worker.isTired())) {
+                        worker.incrementBags();
+                    }
+                } finally {
+                    counter.decrementAndGet();
+                }
+            }
+        }
+        System.out.println("Worker " + worker.getId() +
+                " finished, unloaded " + worker.getUnloadedBags() + " bags.");
+    }
+
+    private static List<Integer> pickTiredWorkers(int total, int tiredCount) {
         List<Integer> list = new ArrayList<>();
         for (int i = 1; i <= total; i++) list.add(i);
         Collections.shuffle(list);

@@ -5,14 +5,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Truck {
     private final String name;
     private final AtomicInteger bags;
-    private final AtomicInteger workers; // поля workers и maxWorkers лучше вынести за пределы Truck. Задача Truck называться и перевозить мешки, контроль за кол-вом работников задача, например, прораба (можно в методе мейн, можно добавить сервис)
-    private final int maxWorkers;
 
-    public Truck(String name, int bagCount, int maxWorkers) {
+    public Truck(String name, int bagCount) {
         this.name = name;
         this.bags = new AtomicInteger(bagCount);
-        this.workers = new AtomicInteger(0);
-        this.maxWorkers = maxWorkers;
     }
 
     public boolean hasBags() {
@@ -22,21 +18,13 @@ public class Truck {
     public boolean tryUnload(int workerId, boolean tired) {
         if (!hasBags()) return false;
 
-        if (workers.incrementAndGet() > maxWorkers) {
-            workers.decrementAndGet();
+        if (bags.decrementAndGet() >= 0) {
+            simulateWork(workerId, tired);
+            return true;
+        } else {
+            bags.incrementAndGet();
             return false;
         }
-
-        try {
-            if (bags.get() > 0) {
-                bags.decrementAndGet();
-                simulateWork(workerId, tired);
-                return true;
-            }
-        } finally {
-            workers.decrementAndGet();
-        }
-        return false;
     }
 
     private void simulateWork(int workerId, boolean tired) {
@@ -46,7 +34,7 @@ public class Truck {
             Thread.sleep(workTime);
             System.out.println("Worker " + workerId +
                     (tired ? " (tired)" : "") +
-                    " unloaded bag with " + name);
+                    " unloaded bag from " + name);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
