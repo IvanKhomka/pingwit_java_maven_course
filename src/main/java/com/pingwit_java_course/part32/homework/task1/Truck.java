@@ -5,21 +5,27 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Truck {
     private final String name;
     private final AtomicInteger bags;
+    private final AtomicInteger workerSlots;
 
-    public Truck(String name, int bagCount) {
+    public Truck(String name, int bagCount, int workerSlotCount) {
         this.name = name;
         this.bags = new AtomicInteger(bagCount);
+        this.workerSlots = new AtomicInteger(workerSlotCount);
     }
 
-    public boolean hasBags() {
+    public AtomicInteger getWorkerSlots() {
+        return workerSlots;
+    }
+
+    public synchronized boolean hasBags() {
         return bags.get() > 0;
     }
 
-    public boolean tryUnload(int workerId, boolean tired) {
-        if (!hasBags()) return false; //всегда добавляй {}
-
+    public synchronized boolean tryUnload(int workerId, boolean tired) {
+        if (bags.get() <= 0) {
+            return false;
+        }
         if (bags.decrementAndGet() >= 0) {
-            simulateWork(workerId, tired);
             return true;
         } else {
             bags.incrementAndGet();
@@ -27,16 +33,7 @@ public class Truck {
         }
     }
 
-    private void simulateWork(int workerId, boolean tired) {
-        try {
-            int baseTime = 300;
-            int workTime = tired ? (int) (baseTime * 1.5) : baseTime;
-            Thread.sleep(workTime);
-            System.out.println("Worker " + workerId +
-                    (tired ? " (tired)" : "") +
-                    " unloaded bag from " + name);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+    public String getName() {
+        return name;
     }
 }
