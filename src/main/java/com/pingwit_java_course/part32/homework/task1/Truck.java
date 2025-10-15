@@ -21,7 +21,14 @@ public class Truck {
         return bags.get() > 0;
     }
 
-    public synchronized boolean tryUnload(int workerId, boolean tired) {
+    public synchronized boolean tryUnload(int workerId, boolean tired) { // аргументы не используются
+        /* этот метод synchronized, поэтому
+        if (bags.get() <= 0) {
+            return false;
+        } else {
+            bags.decrementAndGet();
+            return true;
+         */
         if (bags.get() <= 0) {
             return false;
         }

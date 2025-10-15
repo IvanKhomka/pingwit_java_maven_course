@@ -29,6 +29,7 @@ public class CementUnload {
         ExecutorService executor = Executors.newFixedThreadPool(WORKERS);
         List<Worker> workers = new ArrayList<>();
 
+        // у тебя
         for (int i = 1; i <= WORKERS; i++) {
             boolean tired = tiredWorkers.contains(i);
             Worker worker = new Worker(i, tired);
@@ -41,7 +42,7 @@ public class CementUnload {
 
         Worker best = workers.stream()
                 .max(Comparator.comparingInt(Worker::getUnloadedBags))
-                .orElseThrow();
+                .orElseThrow();//вот здесь можно бросить свое исключение с понятным сообщением
 
         System.out.println("\nWinner: Worker " + best.getId() +
                 " unloaded " + best.getUnloadedBags() + " bags and receives burger!");
@@ -55,9 +56,16 @@ public class CementUnload {
             workers.add(i);
         }
 
+        /*
+        Вот здесь есть проблема. В tiredWorkers ты добавляешь результат
+        random.nextInt(workers.size());
+        А должен workers.get(tiredWorker);
+        Если random.nextInt(workers.size()); дважды (или х3) вернет одинаковое знаечение, то в tiredWorkers
+        будет меньше уставших работников, чем ты хочешь.
+         */
         Set<Integer> tiredWorkers = new HashSet<>();
         for (int i = 0; i < tiredCount; i++) {
-            int tiredWorker = random.nextInt(workers.size());
+            int tiredWorker = random.nextInt(workers.size()); // tiredWorker -> tiredWorkerIndex
             tiredWorkers.add(tiredWorker);
             workers.remove(tiredWorker);
         }

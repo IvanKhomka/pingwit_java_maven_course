@@ -14,6 +14,9 @@ public class WorkerRunner implements Runnable {
 
     @Override
     public void run() {
+        /* Ты пробежишь по списку грузовиков 1 раз, и какой-то из грузовиков может неэффективно разгружаться.
+        Но это не критично для первых проб многопоточного кода.
+         */
         for (Truck truck : trucks) {
             while (truck.hasBags()) {
                 AtomicInteger slots = truck.getWorkerSlots();
@@ -43,7 +46,7 @@ public class WorkerRunner implements Runnable {
     private void simulateWork(Truck truck, int workerId, boolean tired) {
         try {
             int baseTime = 300;
-            int workTime = tired ? (int) (baseTime * 1.5) : baseTime;
+            int workTime = tired ? (int) (baseTime * 1.5) : baseTime; // 1.5 магическое число в константу класса
             Thread.sleep(workTime);
             System.out.println("Worker " + workerId +
                     (tired ? " (tired)" : "") +
