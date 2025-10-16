@@ -21,22 +21,12 @@ public class Truck {
         return bags.get() > 0;
     }
 
-    public synchronized boolean tryUnload(int workerId, boolean tired) { // аргументы не используются
-        /* этот метод synchronized, поэтому
+    public synchronized boolean tryUnload() {
         if (bags.get() <= 0) {
             return false;
         } else {
             bags.decrementAndGet();
             return true;
-         */
-        if (bags.get() <= 0) {
-            return false;
-        }
-        if (bags.decrementAndGet() >= 0) {
-            return true;
-        } else {
-            bags.incrementAndGet();
-            return false;
         }
     }
 

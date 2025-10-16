@@ -6,6 +6,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class WorkerRunner implements Runnable {
     private final Worker worker;
     private final List<Truck> trucks;
+    private static final double TIRED_MULTIPLIER = 1.5;
+    private static final int BASE_WORK_TIME_MS = 300;
+    private static final int REST_TIME_MS = 100;
 
     public WorkerRunner(Worker worker, List<Truck> trucks) {
         this.worker = worker;
@@ -14,16 +17,13 @@ public class WorkerRunner implements Runnable {
 
     @Override
     public void run() {
-        /* Ты пробежишь по списку грузовиков 1 раз, и какой-то из грузовиков может неэффективно разгружаться.
-        Но это не критично для первых проб многопоточного кода.
-         */
         for (Truck truck : trucks) {
             while (truck.hasBags()) {
                 AtomicInteger slots = truck.getWorkerSlots();
 
                 if (slots.decrementAndGet() >= 0) {
                     try {
-                        if (truck.tryUnload(worker.getId(), worker.isTired())) {
+                        if (truck.tryUnload()) {
                             simulateWork(truck, worker.getId(), worker.isTired());
                             worker.incrementBags();
                         } else {
@@ -45,8 +45,7 @@ public class WorkerRunner implements Runnable {
 
     private void simulateWork(Truck truck, int workerId, boolean tired) {
         try {
-            int baseTime = 300;
-            int workTime = tired ? (int) (baseTime * 1.5) : baseTime; // 1.5 магическое число в константу класса
+            int workTime = tired ? (int) (BASE_WORK_TIME_MS * TIRED_MULTIPLIER) : BASE_WORK_TIME_MS;
             Thread.sleep(workTime);
             System.out.println("Worker " + workerId +
                     (tired ? " (tired)" : "") +
@@ -58,7 +57,7 @@ public class WorkerRunner implements Runnable {
 
     private void sleepShort() {
         try {
-            Thread.sleep(100);
+            Thread.sleep(REST_TIME_MS);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
