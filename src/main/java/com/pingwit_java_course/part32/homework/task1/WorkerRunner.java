@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class WorkerRunner implements Runnable {
-    private final Worker worker;
-    private final List<Truck> trucks;
-    private static final double TIRED_MULTIPLIER = 1.5;//константы в самый верх класса
+    private static final double TIRED_MULTIPLIER = 1.5;
     private static final int BASE_WORK_TIME_MS = 300;
     private static final int REST_TIME_MS = 100;
+    private final Worker worker;
+    private final List<Truck> trucks;
 
     public WorkerRunner(Worker worker, List<Truck> trucks) {
         this.worker = worker;
