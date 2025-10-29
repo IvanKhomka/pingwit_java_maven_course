@@ -29,7 +29,7 @@ public class DailyWeather {
         this.description = description;
     }
 
-    public double getAverageTemperature() {
+    public double getAverageTemperature() { // этот метод лучше вынести в WeatherPlanner и сделать его приватным
         return (temperature.getMorning() + temperature.getDay()
                 + temperature.getEvening() + temperature.getNight()) / 4.0;
     }

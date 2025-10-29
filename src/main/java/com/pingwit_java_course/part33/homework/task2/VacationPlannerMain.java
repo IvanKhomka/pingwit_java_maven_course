@@ -15,17 +15,18 @@ public class VacationPlannerMain {
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.print("Enter desired average temperature (press Enter for default temperature(20°C)): ");
             String tempInput = scanner.nextLine();
-            double targetTemp = tempInput.isEmpty() ? DEFAULT_TARGET_TEMP : Double.parseDouble(tempInput);
+            double targetTemp = tempInput.isEmpty() ? DEFAULT_TARGET_TEMP : Double.parseDouble(tempInput);// за решение с дефолтной температурой отдельный плюсик
 
             System.out.print("Enter desired vacation length (in days): ");
             int desiredDays = scanner.nextInt();
 
+            //я бы часть с парсингом Forecast вынес в самый верх. Потому что в теории файл может не прочитаться и не распарситься, а тогда смысла спрашивать у пользователя температуру и дни нет
             String json = new String(Files.readAllBytes(Paths.get(FORECAST_FILE)));
             ObjectMapper mapper = new ObjectMapper();
             Forecast forecast = mapper.readValue(json, Forecast.class);
 
             WeatherPlanner planner = new WeatherPlanner(forecast);
-            planner.findBestPeriod(targetTemp, desiredDays);
+            planner.findBestPeriod(targetTemp, desiredDays); // этот может должен возвращать результат, а печатать можешь в методе main
 
         } catch (IOException e) {
             System.err.println("Error reading forecast file: " + e.getMessage());

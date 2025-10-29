@@ -16,6 +16,7 @@ public class TicketOffice {
         return ticketsLeft.get();
     }
 
+    //а что если возвращать объект BookingResponse с количеством купленных билетов и полем скидкаДляСледующейПокупки?
     public boolean tryBuyTicket(int customerId) {
         lock.lock();
         try {

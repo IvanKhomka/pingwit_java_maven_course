@@ -18,6 +18,8 @@ public class WeatherPlanner {
         int bestLength = 0;
 
 
+        // как можно улучшить алгоритм, если существует несколько подходящих периодов с одинаковой средней температурой?
+        //как думаешь, стоит 1 раз пройтись по List<DailyWeather> и посчитать средние температуры, чтобы не делать это каждый раз в цикле?
         for (int start = 0; start < totalDays; start++) {
             double sum = 0;
             int count = 0;
