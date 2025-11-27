@@ -13,20 +13,32 @@ public class VacationPlannerMain {
 
     public static void main(String[] args) {
         try (Scanner scanner = new Scanner(System.in)) {
-            System.out.print("Enter desired average temperature (press Enter for default temperature(20°C)): ");
-            String tempInput = scanner.nextLine();
-            double targetTemp = tempInput.isEmpty() ? DEFAULT_TARGET_TEMP : Double.parseDouble(tempInput);// за решение с дефолтной температурой отдельный плюсик
 
-            System.out.print("Enter desired vacation length (in days): ");
-            int desiredDays = scanner.nextInt();
-
-            //я бы часть с парсингом Forecast вынес в самый верх. Потому что в теории файл может не прочитаться и не распарситься, а тогда смысла спрашивать у пользователя температуру и дни нет
             String json = new String(Files.readAllBytes(Paths.get(FORECAST_FILE)));
             ObjectMapper mapper = new ObjectMapper();
             Forecast forecast = mapper.readValue(json, Forecast.class);
 
+            System.out.print("Enter desired average temperature (press Enter for default 20°C): ");
+            String tempInput = scanner.nextLine();
+            double targetTemp = tempInput.isEmpty() ? DEFAULT_TARGET_TEMP : Double.parseDouble(tempInput);
+
+            System.out.print("Enter desired vacation length (in days): ");
+            int desiredDays = scanner.nextInt();
+
             WeatherPlanner planner = new WeatherPlanner(forecast);
-            planner.findBestPeriod(targetTemp, desiredDays); // этот может должен возвращать результат, а печатать можешь в методе main
+            RecommendedPeriod period = planner.findBestPeriod(targetTemp, desiredDays);
+
+            System.out.println("\nCity: " + forecast.getCity());
+
+            if (period.isFound()) {
+                DailyWeather start = forecast.getForecast().get(period.getStartIndex());
+                DailyWeather end = forecast.getForecast().get(period.getStartIndex() + period.getLength() - 1);
+
+                System.out.printf("Recommended period: %s — %s (%d days)%n", start.getDate(), end.getDate(), period.getLength());
+                System.out.printf("Average temperature: %.2f°C%n", period.getAverageTemp());
+            } else {
+                System.out.printf("No suitable period found with average temperature above %.1f°C.%n", targetTemp);
+            }
 
         } catch (IOException e) {
             System.err.println("Error reading forecast file: " + e.getMessage());
