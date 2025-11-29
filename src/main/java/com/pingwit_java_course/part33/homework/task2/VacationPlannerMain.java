@@ -16,6 +16,9 @@ public class VacationPlannerMain {
 
             String json = new String(Files.readAllBytes(Paths.get(FORECAST_FILE)));
             ObjectMapper mapper = new ObjectMapper();
+            /* У mapper есть метод, в который можно передать файл mapper.readValue(File src, Class<T> valueType)
+            т.е. ты можешь сразу передать файл, не читая его в строку -> mapper.readValue(new File(FORECAST_FILE), Forecast.class);
+             */
             Forecast forecast = mapper.readValue(json, Forecast.class);
 
             System.out.print("Enter desired average temperature (press Enter for default 20°C): ");

@@ -9,8 +9,15 @@ public class WeatherPlanner {
         this.forecast = forecast;
     }
 
-    private double avg(DailyWeather day) {
+    private double avg(DailyWeather day) { //приватные методы лучше размещать внизу класса
         Temperature t = day.getTemperature();
+
+        // твой вариант будет работать быстрее, но если появятся новые поля в Temperature, то 4.0 необходимо будет менять на 5.0 и т.д.
+        /* альтернативный вариант:
+         List.of(1.0, 2.0, 3.0).stream()
+                .mapToDouble(Double::doubleValue)
+                .average();
+         */
         return (t.getMorning() + t.getDay() + t.getEvening() + t.getNight()) / 4.0;
     }
 
@@ -34,7 +41,7 @@ public class WeatherPlanner {
 
                 int count = end - start + 1;
 
-                if (count > desiredDays) break;
+                if (count > desiredDays) break; //всегда используй фигурные скобки для блоков if, for, while
 
                 sum += avgTemps[end];
                 double avg = sum / count;

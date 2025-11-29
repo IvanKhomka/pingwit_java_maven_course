@@ -36,8 +36,8 @@ public class TicketBookingApp {
         int failedCount = 0;
 
         for (BookingResponse r : results) {
-            if (r.isSuccess()) successCount++;
-            else failedCount++;
+            if (r.isSuccess()) successCount++;// всегда используй {}
+            else failedCount++;// всегда используй {}
         }
 
         System.out.println("Sale ended!");

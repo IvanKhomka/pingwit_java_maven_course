@@ -5,7 +5,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class TicketOfficeService {
 
     private int ticketsLeft;
-    private final ReentrantLock lock = new ReentrantLock();
+    private final ReentrantLock lock = new ReentrantLock();//final поля лучше располагать первыми в классе, выше только static+final
 
     public TicketOfficeService(int totalTickets) {
         this.ticketsLeft = totalTickets;
