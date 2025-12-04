@@ -9,18 +9,6 @@ public class WeatherPlanner {
         this.forecast = forecast;
     }
 
-    private double avg(DailyWeather day) { //приватные методы лучше размещать внизу класса
-        Temperature t = day.getTemperature();
-
-        // твой вариант будет работать быстрее, но если появятся новые поля в Temperature, то 4.0 необходимо будет менять на 5.0 и т.д.
-        /* альтернативный вариант:
-         List.of(1.0, 2.0, 3.0).stream()
-                .mapToDouble(Double::doubleValue)
-                .average();
-         */
-        return (t.getMorning() + t.getDay() + t.getEvening() + t.getNight()) / 4.0;
-    }
-
     public RecommendedPeriod findBestPeriod(double targetTemp, int desiredDays) {
 
         List<DailyWeather> days = forecast.getForecast();
@@ -32,7 +20,7 @@ public class WeatherPlanner {
         }
 
         double bestAvg = 0;
-        int bestStart = -1;
+        Integer bestStart = null;
         int bestLength = 0;
 
         for (int start = 0; start < totalDays; start++) {
@@ -41,13 +29,15 @@ public class WeatherPlanner {
 
                 int count = end - start + 1;
 
-                if (count > desiredDays) break; //всегда используй фигурные скобки для блоков if, for, while
+                if (count > desiredDays) {
+                    break;
+                }
 
                 sum += avgTemps[end];
                 double avg = sum / count;
 
                 if (avg >= targetTemp) {
-                    if (avg > bestAvg || (avg == bestAvg && count > bestLength)) {
+                    if (bestStart == null || avg > bestAvg || (avg == bestAvg && count > bestLength)) {
                         bestAvg = avg;
                         bestStart = start;
                         bestLength = count;
@@ -57,5 +47,19 @@ public class WeatherPlanner {
         }
 
         return new RecommendedPeriod(bestStart, bestLength, bestAvg);
+    }
+
+    private double avg(DailyWeather day) {
+        Temperature t = day.getTemperature();
+        return List.of(
+                        t.getMorning(),
+                        t.getDay(),
+                        t.getEvening(),
+                        t.getNight()
+                )
+                .stream()
+                .mapToDouble(Double::doubleValue)
+                .average()
+                .orElse(Double.NaN);
     }
 }

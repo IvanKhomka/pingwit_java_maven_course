@@ -1,9 +1,8 @@
 package com.pingwit_java_course.part33.homework.task2;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class VacationPlannerMain {
@@ -14,12 +13,9 @@ public class VacationPlannerMain {
     public static void main(String[] args) {
         try (Scanner scanner = new Scanner(System.in)) {
 
-            String json = new String(Files.readAllBytes(Paths.get(FORECAST_FILE)));
             ObjectMapper mapper = new ObjectMapper();
-            /* У mapper есть метод, в который можно передать файл mapper.readValue(File src, Class<T> valueType)
-            т.е. ты можешь сразу передать файл, не читая его в строку -> mapper.readValue(new File(FORECAST_FILE), Forecast.class);
-             */
-            Forecast forecast = mapper.readValue(json, Forecast.class);
+
+            Forecast forecast = mapper.readValue(new File(FORECAST_FILE), Forecast.class);
 
             System.out.print("Enter desired average temperature (press Enter for default 20°C): ");
             String tempInput = scanner.nextLine();
@@ -34,10 +30,11 @@ public class VacationPlannerMain {
             System.out.println("\nCity: " + forecast.getCity());
 
             if (period.isFound()) {
-                DailyWeather start = forecast.getForecast().get(period.getStartIndex());
-                DailyWeather end = forecast.getForecast().get(period.getStartIndex() + period.getLength() - 1);
+                DailyWeather start = forecast.getForecast().get(period.getStartDay());
+                DailyWeather end = forecast.getForecast().get(period.getStartDay() + period.getLength() - 1);
 
-                System.out.printf("Recommended period: %s — %s (%d days)%n", start.getDate(), end.getDate(), period.getLength());
+                System.out.printf("Recommended period: %s — %s (%d days)%n",
+                        start.getDate(), end.getDate(), period.getLength());
                 System.out.printf("Average temperature: %.2f°C%n", period.getAverageTemp());
             } else {
                 System.out.printf("No suitable period found with average temperature above %.1f°C.%n", targetTemp);

@@ -1,18 +1,19 @@
 package com.pingwit_java_course.part33.homework.task2;
 
 public class RecommendedPeriod {
-    private final int startIndex; //startIndex -> startDay и возможно стоит поле сделать Integer и хранить null если не найдено вместо -1
+
+    private final Integer startDay;
     private final int length;
     private final double averageTemp;
 
-    public RecommendedPeriod(int startIndex, int length, double averageTemp) {
-        this.startIndex = startIndex;
+    public RecommendedPeriod(Integer startDay, int length, double averageTemp) {
+        this.startDay = startDay;
         this.length = length;
         this.averageTemp = averageTemp;
     }
 
-    public int getStartIndex() {
-        return startIndex;
+    public Integer getStartDay() {
+        return startDay;
     }
 
     public int getLength() {
@@ -24,6 +25,6 @@ public class RecommendedPeriod {
     }
 
     public boolean isFound() {
-        return startIndex >= 0;
+        return startDay != null;
     }
 }
