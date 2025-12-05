@@ -1,6 +1,7 @@
 package com.pingwit_java_course.part33.homework.task2;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public class WeatherPlanner {
     private final Forecast forecast;
@@ -51,14 +52,12 @@ public class WeatherPlanner {
 
     private double avg(DailyWeather day) {
         Temperature t = day.getTemperature();
-        /// вишенкой на торте можно заменить List.of на Stream.of
-        return List.of(
+        return Stream.of(
                         t.getMorning(),
                         t.getDay(),
                         t.getEvening(),
                         t.getNight()
                 )
-                .stream()
                 .mapToDouble(Double::doubleValue)
                 .average()
                 .orElse(Double.NaN);
