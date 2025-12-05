@@ -51,6 +51,7 @@ public class WeatherPlanner {
 
     private double avg(DailyWeather day) {
         Temperature t = day.getTemperature();
+        /// вишенкой на торте можно заменить List.of на Stream.of
         return List.of(
                         t.getMorning(),
                         t.getDay(),
