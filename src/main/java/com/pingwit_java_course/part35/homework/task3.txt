@@ -1,0 +1,8 @@
+create table Student
+(
+id integer primary key,
+name character varying not null,
+surname character varying not null,
+age integer not null,
+active boolean
+);

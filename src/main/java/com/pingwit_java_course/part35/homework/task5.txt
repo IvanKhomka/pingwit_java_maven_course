@@ -1,0 +1,17 @@
+drop table student;
+
+create table Student
+(
+id integer primary key,
+name character varying not null,
+surname character varying not null,
+age integer not null,
+active boolean
+);
+
+insert into student (id, name, surname, age, active) values
+(1, 'Egorka', 'Ivanov', 21, true),
+(2, 'Ivan', 'Mashkov', 24, true),
+(3, 'Pawel', 'Sergeev', 18, false),
+(4, 'Anna', 'Dobraya', 22, true),
+(5, 'Alex', 'Grishko', 19, false);

@@ -1,0 +1,6 @@
+insert into student (id, name, surname, age, active) values
+(1, 'Egorka', 'Egorov', 24, true),
+(2, 'Ivan', 'Khomich', 22, true),
+(3, 'Dmitry', 'Aleksandrovich', 19, false),
+(4, 'Elena', 'Olegovna', 21, true),
+(5, 'Alex', 'Gryschenko', 23, false);
