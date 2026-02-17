@@ -1,0 +1,1 @@
+alter table student rename column java_version to course;

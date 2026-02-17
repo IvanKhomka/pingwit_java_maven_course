@@ -1,0 +1,3 @@
+alter table student
+alter column course type character varying
+using 'java-' || course::character varying;
