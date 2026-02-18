@@ -1,2 +1,4 @@
 select * from student
 where name like 'A%' or surname like 'A%';
+
+# Чуть более продвинутый вариант в этом примере использовать ILIKE вместо LIKE, чтобы включить в поиск имена с маленькой буквы
