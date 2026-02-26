@@ -1,0 +1,3 @@
+SELECT COUNT(*) AS inactive_studennts 
+FROM student 
+WHERE active = false;

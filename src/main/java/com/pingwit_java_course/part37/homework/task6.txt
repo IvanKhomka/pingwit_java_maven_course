@@ -1,0 +1,6 @@
+SELECT * FROM (
+    SELECT * FROM student 
+    ORDER BY id ASC 
+    LIMIT 5 OFFSET 5
+) AS subquery
+ORDER BY id DESC;
