@@ -1,0 +1,4 @@
+SELECT COUNT(st.student_id) AS total_students
+FROM student_topic st
+JOIN topic t ON st.topic_id = t.id
+WHERE t.name = 'Java stream API';

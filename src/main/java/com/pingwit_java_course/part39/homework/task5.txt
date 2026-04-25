@@ -1,0 +1,7 @@
+SELECT 
+s.name, 
+s.surname, 
+t.name AS topic_name
+FROM student s
+JOIN student_topic st ON s.id = st.student_id
+JOIN topic t ON st.topic_id = t.id;

@@ -1,0 +1,5 @@
+SELECT s.name, s.surname, COUNT(st.topic_id) AS topics_count
+FROM student s
+JOIN student_topic st ON s.id = st.student_id
+GROUP BY s.id, s.name, s.surname
+HAVING COUNT(st.topic_id) > 3;

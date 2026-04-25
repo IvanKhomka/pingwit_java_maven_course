@@ -1,0 +1,4 @@
+SELECT course, COUNT(*) as student_count
+FROM student
+GROUP BY course
+ORDER BY student_count DESC;
