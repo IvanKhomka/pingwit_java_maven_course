@@ -5,3 +5,6 @@ t.name AS topic_name
 FROM student s
 JOIN student_topic st ON s.id = st.student_id
 JOIN topic t ON st.topic_id = t.id;
+
+
+-- Ты используешь JOIN, он же INNER JOIN и в выборку не попадут студенты без тем. А должны попасть все.

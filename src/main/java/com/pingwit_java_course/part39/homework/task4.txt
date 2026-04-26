@@ -2,3 +2,10 @@ SELECT course, COUNT(*) as student_count
 FROM student
 GROUP BY course
 ORDER BY student_count DESC;
+
+
+-- Твой вариант верный, но можно чуть упростить
+SELECT course, COUNT(*)
+FROM student
+GROUP BY course
+ORDER BY COUNT(*) DESC;
