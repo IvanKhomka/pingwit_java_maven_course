@@ -32,6 +32,10 @@ public class StockMarketService {
             pstmt.setInt(1, pageSize);
             pstmt.setInt(2, offset);
 
+            //чтобы совсем красиво было
+            /*
+            try (ResultSet rs = pstmt.executeQuery()) {} -> result set тоже хорошо в try-with-resources добавлять
+            * */
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 stockList.add(mapResultSetToStock(rs));

@@ -23,19 +23,22 @@ public class StockDataFiller {
             preparedStatement.setString(2, "Nike Inc.");
             preparedStatement.setString(3, "Beaverton, USA");
             preparedStatement.setBigDecimal(4, new BigDecimal("102.45"));
-            preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate(); // -> preparedStatement.addBatch();
 
             preparedStatement.setString(1, "COLM");
             preparedStatement.setString(2, "Columbia Sportswear.");
             preparedStatement.setString(3, "Portland, USA");
             preparedStatement.setBigDecimal(4, new BigDecimal("78.30"));
-            preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();// -> preparedStatement.addBatch();
 
             preparedStatement.setString(1, "ADS");
             preparedStatement.setString(2, "Adidas AG.");
             preparedStatement.setString(3, "Herzogenaurach, Germany");
             preparedStatement.setBigDecimal(4, new BigDecimal("195.20"));
-            preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();// -> preparedStatement.addBatch();
+
+            //и вот здесь
+            //preparedStatement.executeBatch(); // один запрос к БД
 
             System.out.println("Data successfully inserted into 'stocks' table");
 

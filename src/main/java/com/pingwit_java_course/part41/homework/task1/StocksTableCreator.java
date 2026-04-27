@@ -12,6 +12,7 @@ public class StocksTableCreator {
     private static final String PASSWORD = "docker";
 
     public static void main(String[] args) {
+        // "CREATE TABLE IF NOT EXISTS stocks (...)" -> IF NOT EXISTS - чтобы при повторном запуске программы не упасть
         String createTableSQL = "CREATE TABLE stocks (" +
                 "id SERIAL PRIMARY KEY, " +
                 "ticker VARCHAR(5) NOT NULL, " +
@@ -24,7 +25,7 @@ public class StocksTableCreator {
 
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
              Statement statement = connection.createStatement()) {
-
+            //многовато лишних строк
 
             statement.execute(createTableSQL);
             System.out.println("Table 'stocks' was successfully created!");

@@ -13,7 +13,7 @@ public class StockAnalytics {
 
     public static void main(String[] args) {
         int x = 3;
-        List<Stock> topStocks = getTopExpensiveStocks(x, x);
+        List<Stock> topStocks = getTopExpensiveStocks(x, x);//понимаю желание сократить, но лучше так не делать
 
         System.out.println("Top-" + x + " most expensive stocks for " + x + " day/days:");
         topStocks.forEach(System.out::println);
@@ -33,6 +33,7 @@ public class StockAnalytics {
             pstmt.setInt(1, daysLimit);
             pstmt.setInt(2, topX);
 
+            // ResultSet в try-with-resources
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 resultList.add(new Stock(
